@@ -1,6 +1,7 @@
 package com.example.study.repository;
 
 import com.example.study.StudyApplicationTests;
+import com.example.study.model.entitiy.Item;
 import com.example.study.model.entitiy.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -39,17 +40,29 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
 
     @Test
+    @Transactional
     public void read() {
         //리스트로 가져옴.
         //userRepository.findAll();
         //return 값이 Optional임
         //Optional 은 있을 수 도 있고, 없을 수 도 있다는 뜻임.
-        Optional<User> user = userRepository.findById(2L);
 
+        // select * from user where id = ?
+        //Optional<User> user = userRepository.findById(5L);
+        Optional<User> user = userRepository.findByAccount("testUser01");
         user.ifPresent(selectUser -> {
-            System.out.println("user : " + selectUser);
-            System.out.println("email : " + selectUser.getEmail());
+            selectUser.getOrderDetailList().stream().forEach(detail -> {
+                        Item item = detail.getItem();
+                        System.out.println(item);
+                    }
+            );
         });
+
+
+//        user.ifPresent(selectUser -> {
+//            System.out.println("user : " + selectUser);
+//            System.out.println("email : " + selectUser.getEmail());
+//        });
     }
 //    아래와 같이 id를 받아서 조회 후 반환시킴.
 //    public User read(@RequestParam Long id){
@@ -80,10 +93,10 @@ public class UserRepositoryTest extends StudyApplicationTests {
 //    public void delete(@RequestParam Long id) {
 //    }
     @Test
-    @Transactional // 실행 후 rollback 해줌.
+    // @Transactional // 실행 후 rollback 해줌.
     public void delet() {
         Optional<User> user = userRepository.findById(3L);
-    
+
         //False가 return 하면, Error 발생
         Assertions.assertTrue(user.isPresent()); //
 
