@@ -20,13 +20,31 @@ public class User {
     private long id;
 
     private String account;
+
+    private String password;
+
+    private String status;
+
     private String email;
+
     private String phoneNumber;
+
+    private LocalDateTime registeredAt;
+
+    private LocalDateTime unregisteredAt;
+
     private LocalDateTime createdAt;
+
     private String createdBy;
+
     private LocalDateTime updatedAt;
+
     private String updatedBy;
 
+
+
+
+    //연습시 사용한 코드들..
     //FetchType
     //Lazy == 지연로딩 , EAGER == 즉시 로딩
     //Lagy = SELECT * FROM item where id = ?
@@ -43,8 +61,8 @@ public class User {
     //연결된 부분은 N개니, List로 연결 시켜줘야함!
 
     //1:N 관계
-    @OneToMany (fetch = FetchType.LAZY,mappedBy = "user" )
-    private List<OrderDetail> orderDetailList;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//    private List<OrderDetail> orderDetailList;
 
 
 }
