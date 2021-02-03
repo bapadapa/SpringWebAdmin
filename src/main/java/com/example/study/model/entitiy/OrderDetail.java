@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-//@ToString(exclude = {"user","item"}) // 상호 참조하여 Looping이 돈다 -> OverFlow!
+@ToString(exclude = {"item", "orderGroup"}) // 상호 참조하여 Looping이 돈다 -> OverFlow!
 @Entity  //order_detail과 자동 맵핑됨, java(카멜 케이스 ) - DB ( 스테이크 )
 public class OrderDetail {
 
@@ -38,7 +38,17 @@ public class OrderDetail {
     private String updatedBy;
 
 
+    // OrderDetail N : 1 Item
 
+    @ManyToOne
+    private Item item;
+    //private  Long itemId;
+
+
+    //OrderDetail N : 1 OrderGroup
+    @ManyToOne
+    private OrderGroup orderGroup;
+    //private  Long orderGroupId;
 
     //연습시 사용함.
     //반듯이 객체로 연결시켜 줘야함!!
