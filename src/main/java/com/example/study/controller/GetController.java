@@ -2,6 +2,7 @@ package com.example.study.controller;
 
 
 import com.example.study.model.SearchParam;
+import com.example.study.model.network.Header;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,5 +48,15 @@ public class GetController {
         //이렇게 구현하면,Json형태로 묶여서 넘어감
         //이유는 Json이 표준이 되어서, 따로 처리하지 않으면 Json으로 return 함
         return searchParam;
+    }
+
+    @GetMapping("/header")
+    public Header getHeader(){
+        //{
+        //"transactionTime": null,
+        //"resultCode": "OK",
+        //"description": "OK"
+        //}
+        return Header.builder().resultCode("OK").description("OK").build();
     }
 }

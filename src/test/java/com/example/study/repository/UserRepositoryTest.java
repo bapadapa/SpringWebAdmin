@@ -20,14 +20,24 @@ public class UserRepositoryTest extends StudyApplicationTests {
 
     @Test
     public void create() {
-        String account = "Test01";
-        String password = "Test01";
+        String account = "Test02";
+        String password = "Test02";
         String status = "Registered";
-        String email = "Test01@gmail.com";
-        String phoneNumber = "010-1111-2222";
+        String email = "Test02@gmail.com";
+        String phoneNumber = "010-1111-3333";
         LocalDateTime registeredAt = LocalDateTime.now();
-        LocalDateTime createdAt = LocalDateTime.now();
-        String createdBy = "AdminServer";
+/*        LocalDateTime createdAt = LocalDateTime.now();
+        String createdBy = "AdminServer";*/
+
+        //Builder사용
+        User u = User.builder()
+                .account(account)
+                .password(password)
+                .status(status)
+                .email(email)
+                .phoneNumber(phoneNumber)
+                .registeredAt(registeredAt)
+                .build();
 
 
         User user = new User();
@@ -37,8 +47,8 @@ public class UserRepositoryTest extends StudyApplicationTests {
         user.setEmail(email);
         user.setPhoneNumber(phoneNumber);
         user.setRegisteredAt(registeredAt);
-        user.setCreatedAt(createdAt);
-        user.setCreatedBy(createdBy);
+/*        user.setCreatedAt(createdAt);
+        user.setCreatedBy(createdBy);*/
 
         User newUser = userRepository.save(user);
         Assertions.assertNotNull(newUser);
@@ -49,6 +59,14 @@ public class UserRepositoryTest extends StudyApplicationTests {
     @Transactional
     public void read() {
         User user = userRepository.findFirstByPhoneNumberOrderByIdDesc("010-1111-2222");
+
+        //Accessors(chain = true)
+        user.setEmail("")
+                .setPhoneNumber("")
+                .setStatus("");
+
+
+
         if (user != null) {
             user.getOrderGroupList().stream().forEach(orderGroup -> {
                 System.out.println("--------주문 묶음--------");
