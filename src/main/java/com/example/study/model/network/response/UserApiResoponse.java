@@ -27,7 +27,7 @@ public class UserApiResoponse {
 
     private LocalDateTime registeredAt;
 
-    private LocalDateTime unRegisteredAt;
+    private LocalDateTime unregisteredAt;
 
 
 }

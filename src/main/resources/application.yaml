@@ -10,6 +10,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jackson:
     property-naming-strategy: SNAKE_CASE
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 logging:
   level:
     root: info

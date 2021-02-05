@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResoponse> {
@@ -37,36 +38,80 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
         //3. 생성된 데이터 -> UserApiResponse
 
 
-
         return response(newUser);
     }
 
     @Override
     public Header<UserApiResoponse> read(Long id) {
-        return null;
+        //id -> repository getOne , getById
+        /*Optional<User> optional = userRepository.findById(id);
+        return optional
+                .map(user -> response(user))
+                .orElseGet(()-> Header.ERROR("데이터 없음"));*/
+//------------------------------------  위 -> 객체 생성 -> 람다식
+        //아래 -> 전체 람다식
+        //user -< useraApiResponse return
+        return userRepository.findById(id).map(user -> response(user))
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
+
+
+        //값이 있다면 map 실행 , 없다면 orElseGet 실행
+
+
     }
 
     @Override
     public Header<UserApiResoponse> update(Header<UserApiRequest> request) {
-        return null;
+        //1. data 가져오기
+        UserApiRequest userApiRequest = request.getData();
+        //2. id ->User 검색
+        Optional<User> optional = userRepository.findById(userApiRequest.getId());
+
+        return optional.map(user -> {
+            //3. update
+            user.setAccount(userApiRequest.getAccount())
+                    .setPassword(userApiRequest.getPassword())
+                    .setStatus(userApiRequest.getStatus())
+                    .setPhoneNumber(userApiRequest.getPhoneNumber())
+                    .setEmail(userApiRequest.getEmail())
+                    .setRegisteredAt(userApiRequest.getRegisteredAt())
+                    .setUnregisteredAt(userApiRequest.getUnregisteredAt());
+            return user;
+            //4. userApiResponse
+
+        })
+                .map(user -> userRepository.save(user))
+                .map(user -> response(user))
+                .orElseGet(() -> Header.ERROR("데이터 없음"));
+
+
     }
 
     @Override
     public Header delete(Long id) {
-        return null;
+        //1. id -> repository -> user
+        Optional<User> optional = userRepository.findById(id);
+
+        //2. reposiory -> delete
+        return optional.map(user -> {
+            userRepository.delete(user);
+            return Header.OK();
+        }).orElseGet(() -> Header.ERROR("데이터 없음"));
+        //3. response return
+
     }
 
-    private Header<UserApiResoponse> response(User user){
+    private Header<UserApiResoponse> response(User user) {
         // user -> userApiResponse
-        UserApiResoponse userApiResoponse=UserApiResoponse.builder()
+        UserApiResoponse userApiResoponse = UserApiResoponse.builder()
                 .id(user.getId())
                 .account(user.getAccount())
                 .password(user.getPassword())
                 .email(user.getEmail())
                 .phoneNumber(user.getPhoneNumber())
-                . status(user.getStatus())
+                .status(user.getStatus())
                 .registeredAt(user.getRegisteredAt())
-                .unRegisteredAt(user.getUnregisteredAt())
+                .unregisteredAt(user.getUnregisteredAt())
                 .build();
         //return Header + Data
         return Header.OK(userApiResoponse);
