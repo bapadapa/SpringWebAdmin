@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserApiResoponse {
+public class UserApiResponse {
     //암호화 Or 다른 값들을 다르게 정의해서 Return할 수 있기 때문에 따로 정의하는 것이 좋다.
     private Long id;
 

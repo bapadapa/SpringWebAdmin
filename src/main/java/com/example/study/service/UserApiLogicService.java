@@ -4,7 +4,7 @@ import com.example.study.ifs.CrudInterface;
 import com.example.study.model.entitiy.User;
 import com.example.study.model.network.Header;
 import com.example.study.model.network.request.UserApiRequest;
-import com.example.study.model.network.response.UserApiResoponse;
+import com.example.study.model.network.response.UserApiResponse;
 import com.example.study.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResoponse> {
+public class UserApiLogicService implements CrudInterface<UserApiRequest, UserApiResponse> {
 
     @Autowired
     private UserRepository userRepository;
@@ -22,7 +22,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
     // 2. User 생성
     //3. 생성된 데이터 -> UserApiResponse
     @Override
-    public Header<UserApiResoponse> create(Header<UserApiRequest> request) {
+    public Header<UserApiResponse> create(Header<UserApiRequest> request) {
         //1. request Data 가져오기.
         UserApiRequest userApiRequest = request.getData();
         // 2. User 생성
@@ -42,7 +42,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
     }
 
     @Override
-    public Header<UserApiResoponse> read(Long id) {
+    public Header<UserApiResponse> read(Long id) {
         //id -> repository getOne , getById
         /*Optional<User> optional = userRepository.findById(id);
         return optional
@@ -61,7 +61,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
     }
 
     @Override
-    public Header<UserApiResoponse> update(Header<UserApiRequest> request) {
+    public Header<UserApiResponse> update(Header<UserApiRequest> request) {
         //1. data 가져오기
         UserApiRequest userApiRequest = request.getData();
         //2. id ->User 검색
@@ -101,9 +101,9 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 
     }
 
-    private Header<UserApiResoponse> response(User user) {
+    private Header<UserApiResponse> response(User user) {
         // user -> userApiResponse
-        UserApiResoponse userApiResoponse = UserApiResoponse.builder()
+        UserApiResponse userApiResoponse = UserApiResponse.builder()
                 .id(user.getId())
                 .account(user.getAccount())
                 .password(user.getPassword())
