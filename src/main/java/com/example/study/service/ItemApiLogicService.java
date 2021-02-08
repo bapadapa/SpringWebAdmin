@@ -44,7 +44,7 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
 
     @Override
     public Header<ItemApiResponse> read(Long id) {
-        return itemRepository.findById(id).map(item -> response(item))
+        return itemRepository.findById(id).map(this::response)
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
@@ -80,6 +80,10 @@ public class ItemApiLogicService implements CrudInterface<ItemApiRequest, ItemAp
     }
 
     private Header<ItemApiResponse> response(Item item) {
+
+        //Enum에 작성한 title return.
+        //String  statusTitle = item.getStatus().getTitle();
+
         ItemApiResponse body = ItemApiResponse.builder().
                 id(item.getId())
                 .status(item.getStatus())

@@ -2,6 +2,7 @@ package com.example.study.service;
 
 import com.example.study.ifs.CrudInterface;
 import com.example.study.model.entitiy.User;
+import com.example.study.model.enumclass.UserStatus;
 import com.example.study.model.network.Header;
 import com.example.study.model.network.request.UserApiRequest;
 import com.example.study.model.network.response.UserApiResponse;
@@ -29,7 +30,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
         User user = User.builder().
                 account(userApiRequest.getAccount()).
                 password(userApiRequest.getPassword()).
-                status("REGISTERED").
+                status(UserStatus.REGISTERED).
                 phoneNumber(userApiRequest.getPhoneNumber()).
                 email(userApiRequest.getEmail()).
                 registeredAt(LocalDateTime.now()).
@@ -103,7 +104,7 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
 
     private Header<UserApiResponse> response(User user) {
         // user -> userApiResponse
-        UserApiResponse userApiResoponse = UserApiResponse.builder()
+        UserApiResponse userApiResponse = UserApiResponse.builder()
                 .id(user.getId())
                 .account(user.getAccount())
                 .password(user.getPassword())
@@ -114,6 +115,6 @@ public class UserApiLogicService implements CrudInterface<UserApiRequest, UserAp
                 .unregisteredAt(user.getUnregisteredAt())
                 .build();
         //return Header + Data
-        return Header.OK(userApiResoponse);
+        return Header.OK(userApiResponse);
     }
 }

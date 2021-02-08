@@ -53,11 +53,11 @@ public class OrderDetail {
     private Item item;
     //private  Long itemId;
 
-
     //OrderDetail N : 1 OrderGroup
     @ManyToOne
     private OrderGroup orderGroup;
     //private  Long orderGroupId;
+
 
     //연습시 사용함.
     //반듯이 객체로 연결시켜 줘야함!!

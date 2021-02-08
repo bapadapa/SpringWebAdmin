@@ -1,5 +1,6 @@
 package com.example.study.model.network.response;
 
+import com.example.study.model.enumclass.ItemStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,9 +24,9 @@ public class OrderDetailApiResponse {
 
     private BigDecimal totalPrice;
 
-    private Long otherGroupId;
+    private Long orderGroupId;
     
-    private Long categoryId;
+    private Long itemId;
 
 
 }

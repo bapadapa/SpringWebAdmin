@@ -35,7 +35,8 @@ public class AdminUserApiLogicService implements CrudInterface<AdminUserApiReque
 
     @Override
     public Header<AdminUserApiResponse> read(Long id) {
-        return adminUserRepository.findById(id).map(this::response)
+        return adminUserRepository.findById(id)
+                .map(this::response)
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
     }
 
@@ -45,15 +46,15 @@ public class AdminUserApiLogicService implements CrudInterface<AdminUserApiReque
 
         return adminUserRepository.findById(adminUserApiRequest.getId()).map(adminUser -> {
             adminUser
-                    .setAccount(adminUser.getAccount())
-                    .setPassword(adminUser.getPassword())
-                    .setStatus(adminUser.getStatus())
-                    .setRole(adminUser.getRole())
-                    .setLastLoginAt(adminUser.getLastLoginAt())
-                    .setPasswordUpdatedAt(adminUser.getPasswordUpdatedAt())
-                    .setLoginFailCount(adminUser.getLoginFailCount())
-                    .setRegisteredAt(adminUser.getRegisteredAt())
-                    .setUnregisteredAt(adminUser.getUnregisteredAt());
+                    .setAccount(adminUserApiRequest.getAccount())
+                    .setPassword(adminUserApiRequest.getPassword())
+                    .setStatus(adminUserApiRequest.getStatus())
+                    .setRole(adminUserApiRequest.getRole())
+                    .setLastLoginAt(adminUserApiRequest.getLastLoginAt())
+                    .setPasswordUpdatedAt(adminUserApiRequest.getPasswordUpdatedAt())
+                    .setLoginFailCount(adminUserApiRequest.getLoginFailCount())
+                    .setRegisteredAt(adminUserApiRequest.getRegisteredAt())
+                    .setUnregisteredAt(adminUserApiRequest.getUnregisteredAt());
             return adminUser;
         })
                 .map(newAdminUser -> adminUserRepository.save(newAdminUser))

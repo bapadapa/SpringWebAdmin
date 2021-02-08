@@ -1,6 +1,7 @@
 package com.example.study.model.network.response;
 
 
+import com.example.study.model.enumclass.OrderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,7 +20,7 @@ public class OrderGroupApiResponse {
 
     private String status;
 
-    private String orderType; //주문 형태   -> 일괄 / 개별
+    private OrderType orderType; //주문 형태   -> 일괄 / 개별
 
     @Column(columnDefinition = "TEXT")
     private String revAddress;

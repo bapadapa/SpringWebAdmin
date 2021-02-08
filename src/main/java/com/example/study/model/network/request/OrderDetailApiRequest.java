@@ -23,9 +23,9 @@ public class OrderDetailApiRequest {
 
     private BigDecimal totalPrice;
 
-    private Long otherGroupId;
+    private Long orderGroupId;
 
-    private Long categoryId;
+    private Long itemId;
 
 
 }
