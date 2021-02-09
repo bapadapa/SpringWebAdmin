@@ -1,0 +1,18 @@
+package com.example.study.model.enumclass;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
+public enum AdminStatus {
+
+    REGISTERED(1, "등록","관리자 등록 상태"),
+    UNREGISTERED(2,"해지","관리자 해지 상태"),
+    WAITING(3,"대기","관리자 등록 대기 상태");
+
+    private  Integer ID;
+    private String title;
+    private String description;
+
+}

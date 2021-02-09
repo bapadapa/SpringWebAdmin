@@ -14,18 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Service
-public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, PartnerApiResponse> {
-    @Autowired
-    private PartnerRepository partnerRepository;
+public class PartnerApiLogicService extends BaseService<PartnerApiRequest, PartnerApiResponse , Partner> {
 
     @Autowired
     private CategoryRepository categoryRepository;
 
-
     @Override
     public Header<PartnerApiResponse> create(Header<PartnerApiRequest> request) {
         PartnerApiRequest partnerApiRequest = request.getData();
-
         Partner partner = Partner.builder()
                 .name(partnerApiRequest.getName())
                 .status(partnerApiRequest.getStatus())
@@ -38,13 +34,13 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
                 .unregisteredAt(partnerApiRequest.getUnregisteredAt())
                 .category(categoryRepository.getOne(partnerApiRequest.getCategoryId()))
                 .build();
-        Partner newPartner = partnerRepository.save(partner);
+        Partner newPartner = baseRepository.save(partner);
         return response(newPartner);
     }
 
     @Override
     public Header<PartnerApiResponse> read(Long id) {
-        return partnerRepository.findById(id).map(this::response)
+        return baseRepository.findById(id).map(this::response)
                 .orElseGet(()-> Header.ERROR("데이터 없음"));
 
     }
@@ -53,7 +49,7 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
     public Header<PartnerApiResponse> update(Header<PartnerApiRequest> request) {
         PartnerApiRequest partnerApiRequest = request.getData();
 
-        partnerRepository.findById(partnerApiRequest.getId()).map(partner -> {
+        baseRepository.findById(partnerApiRequest.getId()).map(partner -> {
             partner
                     .setName(partnerApiRequest.getName())
                     .setStatus(partnerApiRequest.getStatus())
@@ -66,7 +62,7 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
                     .setCategory(categoryRepository.getOne(partnerApiRequest.getCategoryId()));
             return partner;
         })
-                .map(updatedPartner -> partnerRepository.save(updatedPartner))
+                .map(updatedPartner -> baseRepository.save(updatedPartner))
                 .map(this::response)
                 .orElseGet(() -> Header.ERROR("데이터 없음"));
 
@@ -75,9 +71,9 @@ public class PartnerApiLogicService implements CrudInterface<PartnerApiRequest, 
 
     @Override
     public Header delete(Long id) {
-        return partnerRepository.findById(id)
+        return baseRepository.findById(id)
                 .map(partner -> {
-                    partnerRepository.delete(partner);
+                    baseRepository.delete(partner);
                     return Header.OK();
                 })
                 .orElseGet(() -> Header.ERROR("데이터 없음"));

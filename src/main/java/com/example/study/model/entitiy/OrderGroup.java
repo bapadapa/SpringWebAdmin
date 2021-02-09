@@ -1,6 +1,8 @@
 package com.example.study.model.entitiy;
 
 
+import com.example.study.model.enumclass.OrderDetailStatus;
+import com.example.study.model.enumclass.OrderGroupPaymentType;
 import com.example.study.model.enumclass.OrderType;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -12,7 +14,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.security.PrivateKey;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,7 +30,8 @@ public class OrderGroup {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderDetailStatus status;
 
     @Enumerated(EnumType.STRING)
     private OrderType orderType; //주문 형태   -> 일괄 / 개별
@@ -39,7 +41,8 @@ public class OrderGroup {
 
     private String revName;
 
-    private String paymentType;  // 결제 수단
+    @Enumerated(EnumType.STRING)
+    private OrderGroupPaymentType paymentType;  // 결제 수단
 
     private BigDecimal totalPrice;
 

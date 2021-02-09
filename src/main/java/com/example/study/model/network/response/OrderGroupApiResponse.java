@@ -1,6 +1,8 @@
 package com.example.study.model.network.response;
 
 
+import com.example.study.model.enumclass.OrderDetailStatus;
+import com.example.study.model.enumclass.OrderGroupPaymentType;
 import com.example.study.model.enumclass.OrderType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +20,7 @@ import java.time.LocalDateTime;
 public class OrderGroupApiResponse {
     private Long id;
 
-    private String status;
+    private OrderDetailStatus status;
 
     private OrderType orderType; //주문 형태   -> 일괄 / 개별
 
@@ -27,7 +29,7 @@ public class OrderGroupApiResponse {
 
     private String revName;
 
-    private String paymentType;  // 결제 수단
+    private OrderGroupPaymentType paymentType;  // 결제 수단
 
     private BigDecimal totalPrice;
 
