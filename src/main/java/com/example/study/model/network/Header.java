@@ -24,6 +24,7 @@ public class Header <T>{
 
     private T data;
 
+    private  Pagination pagination;
 
 
 
@@ -43,6 +44,18 @@ public class Header <T>{
                 resultCode("OK").
                 description("OK").
                 data(data).
+                build();
+
+    }
+
+    //Data OK
+    public static <T> Header<T> OK(T data , Pagination pagination){
+        return (Header<T>) Header.builder().
+                transactionTime(LocalDateTime.now()).
+                resultCode("OK").
+                description("OK").
+                data(data).
+                pagination(pagination).
                 build();
 
     }
